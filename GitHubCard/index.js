@@ -29,32 +29,58 @@ import axios from 'axios';
     user, and adding that card to the DOM.
 */
 
-const followersArray = [
-  "Scott-Buttocolla",
-  "Stone98",
-  "c-melchor",
-  "katieolson84",
-  "AgentSamSA",
-  "TreywRoberts",
-  "JuniorDugue",
-  "CerritoCode0101",
-  "Diegormnv",
-  "ahmedseragcodes",
-  "juancaruizc",
-  "atcriteria"
-];
+// Solved With Hard Coded Array
+// const followersArray = [
+//   "Scott-Buttocolla",
+//   "Stone98",
+//   "c-melchor",
+//   "katieolson84",
+//   "AgentSamSA",
+//   "TreywRoberts",
+//   "JuniorDugue",
+//   "CerritoCode0101",
+//   "Diegormnv",
+//   "ahmedseragcodes",
+//   "juancaruizc",
+//   "atcriteria"
+// ];
 
-followersArray.forEach((data) => {
-  axios
-    .get('https://api.github.com/users/' + data)
-    .then((futureData) => {
-      const gitHubInfo = futureData.data;
-      cards.appendChild(makeCard(gitHubInfo));
+// followersArray.forEach((data) => {
+//   axios
+//     .get('https://api.github.com/users/' + data)
+//     .then((futureData) => {
+//       const gitHubInfo = futureData.data;
+//       cards.appendChild(makeCard(gitHubInfo));
+//     })
+//     .catch((err) => {
+//       console.log("Something went wrong", err);
+//     })
+// });
+
+// Solved Programmatically
+axios
+  .get('https://api.github.com/users/joshuasamaniego/followers')
+  .then((res) => {
+    const followerObjects = res.data;
+    followerObjects.forEach((objects) => {
+      console.log(objects);
+      const followerCard = objects.url;
+      axios
+        .get(`${followerCard}`)
+        .then((res) => {
+          const followerData = res.data;
+          console.log(followerData);
+          cards.appendChild(makeCard(followerData));
+        })
+        .catch((err) => {
+          console.log('Something went wrong', err)
+        })
+      
     })
-    .catch((err) => {
-      console.log("Something went wrong", err);
-    })
-});
+  })
+  .catch((err) => {
+    console.log('Something went wrong', err);
+  }) 
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -106,18 +132,19 @@ function makeCard(object) {
   cardInfo.appendChild(usersUsername);
   cardInfo.appendChild(usersLocation);
   cardInfo.appendChild(profile);
-  cardInfo.appendChild(profileAddress);
+  profile.appendChild(profileAddress);
   cardInfo.appendChild(usersFollowers);
   cardInfo.appendChild(usersFollowing);
   cardInfo.appendChild(usersBio);
+  console.log(card);
   // Setting attributes, text and then class names
   image.src = object.avatar_url;
   usersName.textContent = object.name;
   usersUsername.textContent = object.login;
   usersLocation.textContent = `Location: ${object.location}`;
-  profileAddress.href = object.html_url;
+  profileAddress.setAttribute('href', object.html_url);
   profileAddress.textContent = object.html_url;
-  profile.textContent = `Profile: ${profileAddress}`;
+  profile.textContent = `Profile: ${object.html_url}`;
   usersFollowers.textContent = `Followers: ${object.followers}`;
   usersFollowing.textContent = `Following: ${object.following}`;
   usersBio.textContent = `Bio: ${object.bio}`;
