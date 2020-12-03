@@ -3,7 +3,7 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-import axios from 'axios';
+import axios from "axios";
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -59,7 +59,7 @@ import axios from 'axios';
 
 // Solved Programmatically
 axios
-  .get('https://api.github.com/users/joshuasamaniego/followers')
+  .get("https://api.github.com/users/joshuasamaniego/followers")
   .then((res) => {
     const followerObjects = res.data;
     followerObjects.forEach((objects) => {
@@ -73,14 +73,13 @@ axios
           cards.appendChild(makeCard(followerData));
         })
         .catch((err) => {
-          console.log('Something went wrong', err)
-        })
-      
-    })
+          console.log("Something went wrong", err);
+        });
+    });
   })
   .catch((err) => {
-    console.log('Something went wrong', err);
-  }) 
+    console.log("Something went wrong", err);
+  });
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -110,21 +109,21 @@ axios
     luishrd
     bigknell
 */
-const cards = document.querySelector('.cards'); 
+const cards = document.querySelector(".cards");
 
 function makeCard(object) {
-  // Create Elements 
-  const card = document.createElement('div');
-  const image = document.createElement('img');
-  const cardInfo = document.createElement('div');
-  const usersName = document.createElement('h3');
-  const usersUsername = document.createElement('p');
-  const usersLocation = document.createElement('p');
-  const profile = document.createElement('p');
-  const profileAddress = document.createElement('a');
-  const usersFollowers = document.createElement('p');
-  const usersFollowing = document.createElement('p');
-  const usersBio = document.createElement('p');
+  // Create Elements
+  const card = document.createElement("div");
+  const image = document.createElement("img");
+  const cardInfo = document.createElement("div");
+  const usersName = document.createElement("h3");
+  const usersUsername = document.createElement("p");
+  const usersLocation = document.createElement("p");
+  const profile = document.createElement("p");
+  const profileAddress = document.createElement("a");
+  const usersFollowers = document.createElement("p");
+  const usersFollowing = document.createElement("p");
+  const usersBio = document.createElement("p");
   // Create DOM Tree/Heirarchy
   card.appendChild(image);
   card.appendChild(cardInfo);
@@ -142,29 +141,29 @@ function makeCard(object) {
   usersName.textContent = object.name;
   usersUsername.textContent = object.login;
   usersLocation.textContent = `Location: ${object.location}`;
-  profileAddress.setAttribute('href', object.html_url);
+  profileAddress.setAttribute("href", object.html_url);
   profileAddress.textContent = object.html_url;
-  profile.textContent = `Profile: ${object.html_url}`;
+  profile.textContent = `Profile: ${profileAddress}`;
+  console.log(profile);
   usersFollowers.textContent = `Followers: ${object.followers}`;
   usersFollowing.textContent = `Following: ${object.following}`;
   usersBio.textContent = `Bio: ${object.bio}`;
-        // Class Names
-  card.classList.add('card');
-  cardInfo.classList.add('card-info');
-  usersName.classList.add('name');
-  usersUsername.classList.add('username');
+  // Class Names
+  card.classList.add("card");
+  cardInfo.classList.add("card-info");
+  usersName.classList.add("name");
+  usersUsername.classList.add("username");
   // Return Statement
   return card;
-
 }
 
 axios
   .get("https://api.github.com/users/joshuasamaniego")
   .then((res) => {
-    const info = res.data;
-    const maker = makeCard(info);
-    cards.appendChild(maker);
+    // const info = res.data;
+    // const maker = makeCard(info);
+    cards.appendChild(makeCard(res.data));
   })
   .catch((err) => {
-    console.log('something went wrong', err);
-  })
+    console.log("something went wrong", err);
+  });
