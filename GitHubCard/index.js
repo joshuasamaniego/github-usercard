@@ -120,6 +120,7 @@ function makeCard(object) {
   const usersUsername = document.createElement("p");
   const usersLocation = document.createElement("p");
   const profile = document.createElement("p");
+  const profileSpan = document.createElement("span");
   const profileAddress = document.createElement("a");
   const usersFollowers = document.createElement("p");
   const usersFollowing = document.createElement("p");
@@ -131,6 +132,7 @@ function makeCard(object) {
   cardInfo.appendChild(usersUsername);
   cardInfo.appendChild(usersLocation);
   cardInfo.appendChild(profile);
+  profile.appendChild(profileSpan);
   profile.appendChild(profileAddress);
   cardInfo.appendChild(usersFollowers);
   cardInfo.appendChild(usersFollowing);
@@ -141,10 +143,9 @@ function makeCard(object) {
   usersName.textContent = object.name;
   usersUsername.textContent = object.login;
   usersLocation.textContent = `Location: ${object.location}`;
-  profileAddress.setAttribute("href", object.html_url);
+  profileAddress.href = object.html_url;
   profileAddress.textContent = object.html_url;
-  profile.textContent = `Profile: ${profileAddress}`;
-  console.log(profile);
+  profileSpan.textContent = `Profile: `;
   usersFollowers.textContent = `Followers: ${object.followers}`;
   usersFollowing.textContent = `Following: ${object.following}`;
   usersBio.textContent = `Bio: ${object.bio}`;
